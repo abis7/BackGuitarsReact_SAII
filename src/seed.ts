@@ -16,15 +16,19 @@ const guitars = [
     { name: 'Hazel',     image: 'guitarra_12', description: 'Morbi ornare augue nisl, vel elementum dui mollis vel. Curabitur non ex id eros fermentum hendrerit.', price: 379 },
 ]
 
-try {
-    await db.authenticate()
-    await db.sync({ force: true })
-    console.log('Tabla sincronizada (recreada).')
+async function seed() {
+    try {
+        await db.authenticate()
+        await db.sync({ force: true })
+        console.log('Tabla sincronizada (recreada).')
 
-    await Guitar.bulkCreate(guitars)
-    console.log('Guitarras insertadas correctamente.')
-} catch (error) {
-    console.error('Error al insertar guitarras:', error)
-} finally {
-    await db.close()
+        await Guitar.bulkCreate(guitars)
+        console.log('Guitarras insertadas correctamente.')
+    } catch (error) {
+        console.error('Error al insertar guitarras:', error)
+    } finally {
+        await db.close()
+    }
 }
+
+seed()
